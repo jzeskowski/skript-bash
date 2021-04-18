@@ -1,5 +1,5 @@
 #!/bin/sh
-targetfolder="/volume2/Privat/Bilder"
+targetfolder="/volume2/Privat/Bilder/testjahr"
 for f in *.jpg; do
 	if [[ "$f" != "" ]]; then
 		COPY_FILE_OK="0"
@@ -14,10 +14,10 @@ for f in *.jpg; do
 		FILE_EXISTS=$(find $targetfolder -not -empty -type f -name "*.jpg" -size $(stat -c"%s" $f)c)
 		if [[ "$FILE_EXISTS" != "" ]]
 		then
-			DIFF_FILES=$(diff -q "$f" "$FILE_EXISTS")
-			if [[ "$DIFF_FILES" != "" ]]
+			diff -q "$f" "$FILE_EXISTS"
+			if [ "$?" -eq 0 ]
 			then
-				echo "Duplicate Found"
+				echo "Exact Duplicate Found"
 			else 
 				echo "Files Differ"
 				COPY_FILE_OK="1"
@@ -32,8 +32,8 @@ for f in *.jpg; do
 		if [[ "$COPY_FILE_OK" != "0" ]]
 		then
 			echo "Copy File"
-#			mkdir "$SORTED_FOLDER/"
-#			mv -n "$f" "$SORTED_FOLDER/$f"
+			mkdir -p "$SORTED_FOLDER"
+			cp -n "$f" "$SORTED_FOLDER$f"
 		fi
 	fi
 done
