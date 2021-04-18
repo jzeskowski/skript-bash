@@ -1,5 +1,5 @@
 #!/bin/sh
-targetfolder="/volume2/Privat/Bilder/testjahr"
+targetfolder="/path/to/destination"
 for f in *.jpg; do
 	if [[ "$f" != "" ]]; then
 		COPY_FILE_OK="0"
